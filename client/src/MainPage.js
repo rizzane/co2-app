@@ -1,40 +1,84 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
+import Chart from "./chart";
 import './MainPage.scss';
 
 
 export default class MainPage extends React.Component {
-    state = {
-        checked: true,
+    constructor(props) {
+        super(props);
+        this.state = {
+            results: [],
+            searchValue: "",
+            perCapita: false
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.getData = this.getData.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+
+    getData(key) {
+        fetch("/api/" + key)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Something went wrong");
+                }
+            })
+            .then(response => {
+                this.setState({
+                    results: response.results
+                })
+            });
+    }
+
+    handleChange = event => {
+        this.setState({ perCapita: event.target.checked });
     };
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.checked });
-    };
+    handleSearch = event => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            const value = event.target.value.toLowerCase();
+            if (value.length > 0) {
+                this.getData(value);
+            }
+        }
+    }
 
     render() {
         return (
-            <div>
+            <div className="page">
                 <h1 className="MainPage-header">CO<sup>2</sup>-EMISSIONS</h1>
-                <form>
+                <div className="search-box">
                     <div>
                         <TextField
-                            className="search-box"
                             label="Search"
-                            placeholder="Placeholder"
-                            variant="outlined"
+                            style={{ margin: 8 }}
+                            margin="normal"
+                            variant="filled"
+                            type="search"
+                            onKeyPress={this.handleSearch}
                         />
                     </div>
                     <div>
                         <Switch
-                            checked={this.state.checked}
-                            onChange={this.handleChange('checked')}
-                            value="checkedB"
+                            checked={this.state.perCapita}
+                            onChange={this.handleChange}
                             color="primary"
                         />
+                        <span>Per Capita</span>
                     </div>
-                </form>
+                </div>
+                <div className="chart">
+                    <Chart
+                        data={this.state.results}
+                        perCapita={this.state.perCapita}
+                    />
+                </div>
+
             </div>
         );
     }

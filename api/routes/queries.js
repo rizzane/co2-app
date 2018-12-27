@@ -12,7 +12,7 @@ const getArea = (req, res) => {
         if(error) {
             res.status(404).send({url: req.originalUrl + ' not found'});
         }
-        res.status(200).json(results.rows);
+        res.status(200).json({ "results": results.rows });
     });
 }
 

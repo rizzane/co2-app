@@ -1,5 +1,18 @@
+@import "node_modules/react-vis/dist/style";
+
+.page {
+    margin: 0 auto;
+    width: 800px;
+}
+
+.chart {
+    width: 80%;
+    
+}
+
 .MainPage-header {
-    background-color: orange;
+    // background-color: orange;
+    text-align: center;
 }
 
 .search-box {
