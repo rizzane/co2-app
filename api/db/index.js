@@ -20,11 +20,11 @@ pool.on('connect', () => {
         const tableQuery =
             `CREATE TABLE IF NOT EXISTS
                 emissions(
-                key VARCHAR(200),
-                name VARCHAR(200),
-                type VARCHAR(200),
-                year INT,
-                value BIGINT
+                key VARCHAR(100),
+                name VARCHAR(100),
+                type VARCHAR(100),
+                year VARCHAR(4),
+                value VARCHAR(100)
             )`;
         const insertQuery = `INSERT INTO
             emissions(key, name, type, year, value)
@@ -42,8 +42,8 @@ pool.on('connect', () => {
                     json[0]["attr"]["@_key"].toLowerCase(),
                     json[0]["#text"].toLowerCase(),
                     json[1]["#text"],
-                    parseInt(json[2]["#text"]),
-                    parseInt(json[3]["#text"])
+                    json[2]["#text"],
+                    json[3]["#text"]
                 ];
                 const res = await client.query(insertQuery, values);
             }
