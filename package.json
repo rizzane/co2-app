@@ -11,16 +11,19 @@
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "initdb": "node ./api/db"
   },
-  "author": "Joonas Rissanen",
+  "author": {
+    "name": "Joonas Rissanen",
+    "github": "https://github.com/rizzane/"
+  },
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "nodemon": "^1.18.8"
+    "concurrently": "^4.1.0"
   },
   "dependencies": {
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "fast-xml-parser": "^3.12.10",
+    "nodemon": "^1.18.9",
     "pg": "^7.7.1"
   },
   "engines": {
