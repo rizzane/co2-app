@@ -9,10 +9,12 @@ app.use(bodyParser.json());
 var routes = require('./api/routes/routes'); //importing routes
 routes(app); //register the route
 
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "client/build")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"));
+    });
+}
 app.listen(port);
-
-// app.use(function (req, res) {
-    // res.status(404).send({ url: req.originalUrl + ' not found' })
-// });
 
 console.log("RESTful API server started on: " + port);
