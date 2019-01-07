@@ -2,18 +2,17 @@
   "name": "rest_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "author": {
+    "name": "Joonas Rissanen",
+    "github": "https://github.com/rizzane/"
+  },
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "heroku-postbuild": "cd client && yarn install && yarn run build",
     "initdb": "node ./api/db"
-  },
-  "author": {
-    "name": "Joonas Rissanen",
-    "github": "https://github.com/rizzane/"
   },
   "license": "ISC",
   "devDependencies": {
