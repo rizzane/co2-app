@@ -10,9 +10,9 @@
     "client": "cd client && npm start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "npm run initdb && node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "initdb": "node ./api/db"
+    "start": "node server.js",
+    "initdb": "node ./api/db",
+    "heroku-postbuild": "npm run initdb && cd client && npm install && npm run build"
   },
   "license": "ISC",
   "devDependencies": {
