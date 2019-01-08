@@ -12,7 +12,7 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
     "initdb": "node ./api/db",
-    "heroku-postbuild": "npm run initdb && cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "license": "ISC",
   "devDependencies": {
