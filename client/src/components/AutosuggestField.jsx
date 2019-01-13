@@ -29,11 +29,11 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
                 {parts.map((part, index) => {
                     return part.highlight ? (
                         <span key={String(index)} style={{ fontWeight: 500 }}>
-                            {part.text}
+                            {part.text.charAt(0).toUpperCase() + part.text.slice(1)}
                         </span>
                     ) : (
                             <strong key={String(index)} style={{ fontWeight: 300 }}>
-                                {part.text}
+                                {part.text}    
                             </strong>
                         );
                 })}
@@ -44,7 +44,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
 
 function getSuggestionValue(suggestion) {
-    return suggestion.name;
+    return suggestion.name.charAt(0).toUpperCase() + suggestion.name.slice(1);
 }
 
 const styles = theme => ({

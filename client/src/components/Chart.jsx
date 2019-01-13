@@ -1,6 +1,7 @@
 import React from "react";
 import { XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries } from 'react-vis';
 import "../styles/chart.scss";
+
 export default class Chart extends React.Component {
     constructor(props) {
         super(props);

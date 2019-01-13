@@ -65,7 +65,7 @@ class App extends React.Component {
   };
 
   handleSuggestionsFetchRequested = ({value}) => {
-    this.getSuggestions(value);
+    this.getSuggestions(value.toLowerCase());
   };
 
   handleSuggestionsClearRequested = () => {
