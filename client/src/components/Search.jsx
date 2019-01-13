@@ -1,6 +1,6 @@
+import AutosuggestField from "./AutosuggestField";
 import React from 'react';
 import "../styles/search.scss";
-import AutosuggestField from "./AutosuggestField";
 
 const Search = (props) => {
     return (
