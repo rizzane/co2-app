@@ -2,18 +2,21 @@ import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import "../styles/search.scss";
 import CustomInputField from './customInputField';
-
+import IntegrationAutosuggest from "./autosuggest";
 
 
 const Search = (props) => {
     return (
         <div className="search-container">
             <FormControl variant="outlined">
-                <CustomInputField
+                <IntegrationAutosuggest
+                    suggestions={props.suggestions}
                     onChange={props.onChange}
-                    onKeyPress={props.onKeyPress}
                     onClick={props.onClick}
+                    onKeyPress={props.onKeyPress}
                     value={props.value}
+                    handleFetch={props.handleFetch}
+                    handleClear={props.handleClear}
                 />
             </FormControl>
         </div>
