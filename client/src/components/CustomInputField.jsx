@@ -22,16 +22,22 @@ const styles = {
 };
 
 function CustomInputField(props) {
-    const { classes } = props;
+    const { classes, inputRef = () => { }, ref, ...other } = props;
     return (
         <Paper className={classes.root}>
             <InputBase className={classes.input}
-                placeholder="Search"
+                InputProps={{
+                    inputRef: node => {
+                        ref(node);
+                        inputRef(node);
+                    },
+                }}
                 onKeyPress={props.onKeyPress}
                 onChange={props.onChange}
-                value={props.value}
+                {...other}
+                
             />
-            <IconButton className={classes.IconButton} onClick={props.onClick}>
+            <IconButton className={classes.IconButton} onClick={props.onClick} >
                 <SearchIcon />
             </IconButton>
         </Paper>
