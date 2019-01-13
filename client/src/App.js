@@ -1,9 +1,9 @@
 import React from 'react';
 import "./styles/App.scss";
-import Header from "./components/header";
-import Checkbox from "./components/checkbox";
-import Chart from "./components/chart";
-import Search from "./components/autosuggest";
+import Header from "./components/Header";
+import Checkbox from "./components/Checkbox";
+import Chart from "./components/Chart";
+import Search from "./components/Search";
 
 class App extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   getSuggestions(input) {
-    const inputValue = input.trim();
+    const inputValue = input.toLowerCase();
     if (inputValue.length === 0) return [];
 
     fetch("/api/countries/" + inputValue)

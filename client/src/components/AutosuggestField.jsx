@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import "../styles/search.scss";
-import CustomInputField from "./customInputField";
+import CustomInputField from "./CustomInputField";
 
 
 function renderInputComponent(inputProps) {
@@ -74,7 +74,7 @@ const styles = theme => ({
 
 
 
-function Search(props) {
+function AutosuggestField(props) {
     const { classes } = props;
 
     const autosuggestProps = {
@@ -87,36 +87,34 @@ function Search(props) {
     };
 
     return (
-        <div className="search-container">
-            <FormControl>
-                <Autosuggest
-                    {...autosuggestProps}
-                    inputProps={{
-                        placeholder: "Search",
-                        value: props.value,
-                        onChange: props.onChange,
-                        onKeyPress: props.onKeyPress,
-                        onClick: props.onClick,
-                    }}
-                    theme={{
-                        container: classes.container,
-                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                        suggestionsList: classes.suggestionsList,
-                        suggestion: classes.suggestion,
-                    }}
-                    renderSuggestionsContainer={options => (
-                        <Paper {...options.containerProps} square>
-                            {options.children}
-                        </Paper>
-                    )}
-                />
-            </FormControl>
-        </div>
+        <FormControl variant="outlined">
+            <Autosuggest
+                {...autosuggestProps}
+                inputProps={{
+                    placeholder: "Search",
+                    value: props.value,
+                    onChange: props.onChange,
+                    onKeyPress: props.onKeyPress,
+                    onClick: props.onClick,
+                }}
+                theme={{
+                    container: classes.container,
+                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                    suggestionsList: classes.suggestionsList,
+                    suggestion: classes.suggestion,
+                }}
+                renderSuggestionsContainer={options => (
+                    <Paper {...options.containerProps} square>
+                        {options.children}
+                    </Paper>
+                )}
+            />
+        </FormControl>
     );
 }
 
-Search.propTypes = {
+AutosuggestField.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Search);
+export default withStyles(styles)(AutosuggestField);
