@@ -1,21 +1,25 @@
 import React from 'react';
 import "./styles/App.scss";
 import Header from "./components/header";
-import Search from "./components/search";
 import Checkbox from "./components/checkbox";
 import Chart from "./components/chart";
+import Search from "./components/autosuggest";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       results: [],
-      searchInput: "",
-      perCapita: false
+      inputValue: "",
+      perCapita: false,
+      suggestions: []
     }
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSuggestionsFetchRequested = this.handleSuggestionsFetchRequested.bind(this);
+    this.handleSuggestionsClearRequested = this.handleSuggestionsClearRequested.bind(this);
     this.getData = this.getData.bind(this);
+    this.getSuggestions = this.getSuggestions.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -37,30 +41,58 @@ class App extends React.Component {
       });
   }
 
+  getSuggestions(input) {
+    const inputValue = input.trim();
+    if (inputValue.length === 0) return [];
+
+    fetch("/api/countries/" + inputValue)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Failed to fetch");
+        }
+      })
+      .then(response => {
+        this.setState({
+          suggestions: response.results
+        })
+      });
+  }
+  
   handleCheckboxChange = (event) => {
     this.setState({ perCapita: event.target.checked });
   };
 
-  handleInputChange = (event) => {
-    this.setState({ searchInput: event.target.value })
+  handleSuggestionsFetchRequested = ({value}) => {
+    this.getSuggestions(value);
+  };
+
+  handleSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: [],
+        });
+    };
+  handleInputChange = (event, { newValue }) => {
+    this.setState({ inputValue: newValue });
   }
 
   handleClick = (event) => {
     this.handleSearch(event);
   }
   handleKeyPress = (event) => {
-    if(event.key === "Enter") {
+    if (event.key === "Enter") {
       this.handleSearch(event);
     }
   }
   handleSearch = (event) => {
     event.preventDefault();
-    const value = this.state.searchInput.toLowerCase();
+    const value = this.state.inputValue.toLowerCase();
     if (value.length > 0) {
       this.getData(value);
     }
     this.setState({
-      searchInput: ""
+      inputValue: ""
     });
   }
 
@@ -69,10 +101,13 @@ class App extends React.Component {
       <div className="page-container">
         <Header />
         <Search
+          suggestions={this.state.suggestions}
           onChange={this.handleInputChange}
-          onKeyPress={this.handleKeyPress}
           onClick={this.handleClick}
-          value={this.state.searchInput}
+          onKeyPress={this.handleKeyPress}
+          value={this.state.inputValue}
+          handleFetch={this.handleSuggestionsFetchRequested}
+          handleClear={this.handleSuggestionsClearRequested}
         />
         <Checkbox
           checked={this.state.perCapita}
@@ -81,7 +116,6 @@ class App extends React.Component {
         <Chart
           data={this.state.results}
           perCapita={this.state.perCapita}
-          title={this.state.searchInput}
         />
       </div>
     );
