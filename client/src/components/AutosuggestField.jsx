@@ -1,5 +1,4 @@
 import React from 'react';
-import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -8,13 +7,31 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import "../styles/search.scss";
-import CustomInputField from "./CustomInputField";
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 function renderInputComponent(inputProps) {
+    const { onClick, inputRef = () => { }, ref, ...other} = inputProps;
     return (
-        <CustomInputField
-            inputProps={inputProps}
+        <TextField
+            variant="outlined"
+            InputProps={{
+                inputRef: node => {
+                    ref(node);
+                    inputRef(node);
+                },
+                endAdornment: (
+                    <InputAdornment position="end">
+                        <IconButton onClick={onClick} >
+                            <SearchIcon />
+                        </IconButton>
+                    </InputAdornment>
+                ),
+            }}
+            {...other}
         />
     );
 }
@@ -33,7 +50,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
                         </span>
                     ) : (
                             <strong key={String(index)} style={{ fontWeight: 300 }}>
-                                {part.text}    
+                                {part.text}
                             </strong>
                         );
                 })}
@@ -60,7 +77,6 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
         left: 0,
         right: 0,
-        width: 400,
     },
     suggestion: {
         display: 'block',
@@ -87,29 +103,29 @@ function AutosuggestField(props) {
     };
 
     return (
-        <FormControl variant="outlined">
-            <Autosuggest
-                {...autosuggestProps}
-                inputProps={{
-                    placeholder: "Search",
-                    value: props.value,
-                    onChange: props.onChange,
-                    onKeyPress: props.onKeyPress,
-                    onClick: props.onClick,
-                }}
-                theme={{
-                    container: classes.container,
-                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                    suggestionsList: classes.suggestionsList,
-                    suggestion: classes.suggestion,
-                }}
-                renderSuggestionsContainer={options => (
-                    <Paper {...options.containerProps} square>
-                        {options.children}
-                    </Paper>
-                )}
-            />
-        </FormControl>
+
+        <Autosuggest
+            {...autosuggestProps}
+            inputProps={{
+                placeholder: "Search",
+                value: props.value,
+                onChange: props.onChange,
+                onKeyPress: props.onKeyPress,
+                onClick: props.onClick,
+            }}
+            theme={{
+                container: classes.container,
+                suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                suggestionsList: classes.suggestionsList,
+                suggestion: classes.suggestion,
+            }}
+            renderSuggestionsContainer={options => (
+                <Paper {...options.containerProps} square>
+                    {options.children}
+                </Paper>
+            )}
+        />
+
     );
 }
 
