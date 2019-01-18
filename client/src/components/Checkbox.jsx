@@ -6,11 +6,12 @@ const Checkbox = (props) => {
     return (
         <div className="checkbox-container">
             <Switch
+                id="co2-checkbox"
                 checked={props.checked}
                 onChange={props.onChange}
                 color="primary"
             />
-            <span>Per Capita</span>
+            <label htmlFor="co2-checkbox" className="checkbox-label" >Per Capita</label>
         </div>
     );
 }
