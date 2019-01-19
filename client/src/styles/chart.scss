@@ -1,4 +1,13 @@
 .chart-container {
+    position: relative;
     margin: 0 auto;
-    width: 80%;
+}
+
+.chart {
+    max-width: 800px;
+}
+
+.chart-title {
+    position: relative;
+    margin-left: 10%;
 }

@@ -7,11 +7,11 @@
     "github": "https://github.com/rizzane/"
   },
   "scripts": {
-    "client": "cd client && yarn start",
+    "client": "cd client && npm start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn install && yarn run build",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "initdb": "node ./api/db"
   },
   "license": "ISC",
@@ -27,6 +27,6 @@
   },
   "engines": {
     "node": "8.10.0",
-    "yarn": "1.10.1"
+    "yarn": "6.4.1"
   }
 }

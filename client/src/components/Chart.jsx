@@ -1,5 +1,5 @@
 import React from "react";
-import { XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries } from 'react-vis';
+import { makeVisFlexible, XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries } from 'react-vis';
 import "../styles/chart.scss";
 
 export default class Chart extends React.Component {
@@ -26,15 +26,14 @@ export default class Chart extends React.Component {
     render() {
         const dataArr = this.getData();
         const name = (!this.props.data[0]) ? "" : this.props.data[0].name.charAt(0).toUpperCase() + this.props.data[0].name.slice(1);
-
+        const FlexibleXYPlot = makeVisFlexible(XYPlot);
         return (
             <div className="chart-container" >
+                <h3 className="chart-title" >{name}</h3>
                 <div className="chart" >
-                    <h3 className="chart-title" >{name}</h3>
-                    <XYPlot
-                        margin={{ left: 80, right: 80, top: 30 }}
-                        width={700}
-                        height={450} >
+                    <FlexibleXYPlot
+                        margin={{ left: 80, right: 20 }}
+                        height={375}>
                         <VerticalGridLines />
                         <HorizontalGridLines />
                         <XAxis title="Year" />
@@ -43,7 +42,7 @@ export default class Chart extends React.Component {
                             data={dataArr}
                             style={{ stroke: "black", strokeWidth: 1 }}
                         />
-                    </XYPlot>
+                    </FlexibleXYPlot>
                 </div>
             </div>
         );
