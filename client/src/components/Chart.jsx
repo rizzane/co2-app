@@ -9,37 +9,31 @@ export default class Chart extends React.Component {
     }
 
     getData() {
+        const name = (!this.props.data[0]) ? "" : this.props.data[0].name.charAt(0).toUpperCase() + this.props.data[0].name.slice(1);
         if (!this.props.perCapita) {
-            return (
-                this.props.data.map(r => {
-                    return { x: r.year, y: parseInt(r.value) };
-                })
-            );
+            const data = this.props.data.map(r => {return { x: r.year, y: parseInt(r.value) };});
+            return { data, name };
         }
-        return (
-            this.props.data.map(r => {
-                return { x: r.year, y: parseInt(r.value) / parseInt(r.population) };
-            })
-        );
+        const data = this.props.data.map(r => {return { x: r.year, y: parseInt(r.value) / parseInt(r.population) };});
+        return { data, name }
     }
 
     render() {
         const dataArr = this.getData();
-        const name = (!this.props.data[0]) ? "" : this.props.data[0].name.charAt(0).toUpperCase() + this.props.data[0].name.slice(1);
-        const FlexibleXYPlot = makeVisFlexible(XYPlot);
+        const FlexibleXYPlot = makeVisFlexible(XYPlot); // Makes chart mobile friendly
         return (
             <div className="chart-container" >
-                <h3 className="chart-title" >{name}</h3>
+                <h3 className="chart-title" >{dataArr.name}</h3>
                 <div className="chart" >
                     <FlexibleXYPlot
-                        margin={{ left: 80, right: 20 }}
-                        height={375}>
+                        margin={{ left: 70, right: 20 }}
+                        height={370}>
                         <VerticalGridLines />
                         <HorizontalGridLines />
-                        <XAxis title="Year" />
+                        <XAxis title="Year" tickFormat={v => parseInt(v)}/>
                         <YAxis title="CO2 emissions (kt)" />
                         <LineSeries
-                            data={dataArr}
+                            data={dataArr.data}
                             style={{ stroke: "black", strokeWidth: 1 }}
                         />
                     </FlexibleXYPlot>

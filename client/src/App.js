@@ -25,6 +25,7 @@ class App extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
+  // Fetches data from api as json
   getData(key) {
     fetch("/api/" + key)
       .then(response => {
@@ -41,6 +42,7 @@ class App extends React.Component {
       });
   }
 
+  // Fetches suggestions for autosuggest feature
   getSuggestions(input) {
     const inputValue = input.toLowerCase();
     if (inputValue.length === 0) return [];
@@ -85,6 +87,7 @@ class App extends React.Component {
       this.handleSearch(event);
     }
   }
+  
   handleSearch = (event) => {
     event.preventDefault();
     const value = this.state.inputValue.toLowerCase();

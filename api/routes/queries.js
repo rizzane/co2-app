@@ -6,9 +6,10 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL
 });
 
+// Query for getting the country data
 const getArea = (req, res) => {
     const key = req.params.key;
-    pool.query("SELECT * FROM emissions WHERE key=$1 OR name=$1", [key], (error, results) => {
+    pool.query("SELECT * FROM emissions WHERE name=$1", [key], (error, results) => {
         if (error) {
             res.status(404).send({url: req.originalUrl + ' not found'});
         }
@@ -16,6 +17,7 @@ const getArea = (req, res) => {
     });
 }
 
+// Query for getting suggestions for input field
 const getSuggestions = (req, res) => {
     const key = req.params.key + "%";
     pool.query("SELECT DISTINCT name FROM emissions WHERE name LIKE $1 ORDER BY name", [key], (error, results) => {
