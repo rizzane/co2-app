@@ -4,7 +4,7 @@ import "../styles/header.scss";
 const Header = (props) => {
     return (
         <div className="header-container">
-            <h1>CO<sup>2</sup>-EMISSIONS</h1>
+            <h1>CO<sub>2</sub>-EMISSIONS</h1>
         </div>
     );
 }

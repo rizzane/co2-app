@@ -4,9 +4,9 @@ const data = require("../data");
 
 dotenv.config();
 
-
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
 });
 
 pool.on('connect', () => {
@@ -17,7 +17,7 @@ pool.on('connect', () => {
 (async () => {
     const client = await pool.connect();
     try {
-        const dropQuery = "DROP TABLE IF EXISTS emissions";;
+        const dropQuery = "DROP TABLE IF EXISTS emissions";
         var res = await client.query(dropQuery);
         const tableQuery =
             `CREATE TABLE IF NOT EXISTS
@@ -35,7 +35,7 @@ pool.on('connect', () => {
             VALUES($1, $2, $3, $4, $5)
             returning *`;
         const countries = data.countryData;
-        // console.log(countries);
+        
        for(i in countries) {
            let row = countries[i];
             let values = [
