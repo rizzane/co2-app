@@ -35,17 +35,20 @@ pool.on('connect', () => {
             VALUES($1, $2, $3, $4, $5)
             returning *`;
         const countries = data.countryData;
-        
-       for(i in countries) {
-           let row = countries[i];
-            let values = [
-                row["key"],
-                row["name"],
-                row["year"],
-                row["value"],
-                row["population"]
-            ];
-            res = await client.query(insertQuery, values);
+
+        for (i in countries) {
+            let row = countries[i];
+            if (row["value"] > -1) {
+                let values = [
+                    row["key"],
+                    row["name"],
+                    row["year"],
+                    row["value"],
+                    row["population"]
+                ];
+
+                res = await client.query(insertQuery, values);
+            }
         }
     } finally {
         client.release();

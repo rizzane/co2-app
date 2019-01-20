@@ -21,6 +21,10 @@ export default class Chart extends React.Component {
     render() {
         const dataArr = this.getData();
         const FlexibleXYPlot = makeVisFlexible(XYPlot); // Makes chart mobile friendly
+        // Sorts data in case it's in wrong order
+        dataArr.data.sort((a, b) => {
+            return a.x - b.x;
+        })
         return (
             <div className="chart-container" >
                 <h3 className="chart-title" >{dataArr.name}</h3>
