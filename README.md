@@ -7,7 +7,7 @@ You can find the app on [heroku](https://co2-emissions.herokuapp.com/)
 ## Installing
 ### Dependencies
 ```sh
-npm install
+npm install && cd client && npm install
 ```
 ### Database migration
 ```sh
